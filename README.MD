@@ -8,14 +8,14 @@ Most of code is based on examples from Arduino and RadioBro.
 
 #Testing:
 ###Step 1 Clear memory
-Run clear\_memory.  This will clear the addresses from smaller EEPROM. clear\_memory will output complete status for the smaller EEPROM.
+Run clear\_memory.  This will clear the addresses from MCU EEPROM. clear\_memory will output complete status for the MCU EEPROM.
 
 ###Step 2 Read memory
 
-Run read\_cleared\_memory.  This will confirm the addresses of the smaller EEPROM has been cleared.
+Run read\_cleared\_memory.  This will confirm the addresses of the MCU EEPROM has been cleared.
 
 ###Step 3 Test Write to memory
-Run write\_flight\_test.  This will write to smaller and larger EEPROM a static test flight data.
+Run write\_flight\_test.  This will write to MCU and SPI EEPROM a static test flight data.
 
 ###Step 4 Read test flight data
 
@@ -33,10 +33,10 @@ Run read\_flight\_data  This will output the flight data over serial in a CSV fo
 
 #Pre-Flight:
 ###Step 1 Clear memory
-Run clear\_memory.  This will clear the addresses from smaller EEPROM. clear\_memory will output complete status for the smaller EEPROM.
+Run clear\_memory.  This will clear the addresses from MCU EEPROM. clear\_memory will output complete status for the MCU EEPROM.
 
 ###Step 2 Read memory
-Run read\_cleared\_memory.  This will confirm the addresses of the smaller EEPROM has been cleared.
+Run read\_cleared\_memory.  This will confirm the addresses of the MCU EEPROM has been cleared.
 
 #Flight:
 ###Step 1
