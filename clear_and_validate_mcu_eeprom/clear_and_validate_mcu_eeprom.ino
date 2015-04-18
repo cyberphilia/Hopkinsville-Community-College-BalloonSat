@@ -7,6 +7,7 @@ Last Modified: 04/17/2015
 Based on the EEPROM_CLEAR example
 */
 #include <EEPROM.h>
+
 void clear_eeprom(){
 
   Serial.println("Clearing MCU EEPROM cleared ");
@@ -21,6 +22,7 @@ void clear_eeprom(){
 
 }
 void validate_eeprom(){
+  byte output_data;
   Serial.println("Validating MCU EEPROM");
   for (int i = 0; i < 1024; i++) {
     output_data = 0;

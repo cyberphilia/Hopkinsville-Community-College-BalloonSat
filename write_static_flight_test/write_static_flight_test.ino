@@ -8,12 +8,10 @@ Based on BalloonSat Experiment Sensor Board Flight Code
 */
 
 
-#include "MS5611.h" //import functions for interacting with the MS5611 Digital Pressure and Temperature Sensor
 #include "MEMORY.h" //import functions for interacting with the 25AA256 SPI External EEPROM
 #include <SPI.h> //allows for SPI functionality
 #include <EEPROM.h> //allows access to onboard EEPROM
 
-MS5611 ms5611; //set instance of class MS5611
 MEMORY aa256; //set instance of class MEMORY
 
 //set arrays for data writing and variables for analog sensors
@@ -31,15 +29,14 @@ void setup()
  Serial.begin(9600); // start serial with baud rate 9600
  SPI.begin(); //start SPI functionality
  aa256.initE(10); //intialize 25AA256 on slave select pin 10
- ms5611.init(9); //initialize ms5611 (get calibration coefficients) on slave select pin 9
 
- //Serial.println("Initialized"); //uncomment to recieve serial confirmation of intialization
+
 
  //blink green LED after intialization
  digitalWrite(7, HIGH);
  delay(500);
  digitalWrite(7, LOW);
- base = ms5611._press(); //set an initial pressure
+
  //blink blue LED after base pressure is set
  digitalWrite(6, HIGH);
  delay(500);
@@ -75,6 +72,7 @@ void loop()
  unsigned int addr = 0; //start saving data to address 0
  long pressure = 0;
  int temp = 0;
+ int temperature = 0;
  int Humid = 0;
  int IR = 0;
  unsigned long time;
