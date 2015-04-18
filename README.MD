@@ -11,7 +11,7 @@ Most of code is based on examples from Arduino and RadioBro.
   Run clear\_and\_validate\_mcu\_eeprom.  This will clear and validate the MCU EEPROM. clear\_and\_validate\_mcu\_eeprom will output complete status for the MCU EEPROM.
 
 2. ###Write static data to SPI EEPROM
-  Run write\_static\_flight\_test.  This will write to MCU and SPI EEPROM a static test flight data. Run write\_static\_flight\_test will run until is full.
+  Run write\_static\_flight\_test.  This will write to MCU and SPI EEPROM a static test flight data. write\_static\_flight\_test will run until is full.
 
 3. ###Read flight data
   Run read\_flight\_data  This will output the flight data over serial in a CSV format.  Save output to as a csv file.
