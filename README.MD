@@ -7,43 +7,33 @@ Most of code is based on examples from Arduino and RadioBro.
 - [BalloonSat Experiment Sensor Board](http://shop.radiobro.com/BalloonSat-Experiment-Sensor-Board-BSExpBrd.htm)
 
 #Testing:
-###Step 1 Clear memory
-Run clear\_memory.  This will clear the addresses from MCU EEPROM. clear\_memory will output complete status for the MCU EEPROM.
+1. ###Clear and validate MCU EEPROM
+  Run clear\_and\_validate\_mcu\_eeprom.  This will clear and validate the MCU EEPROM. clear\_and\_validate\_mcu\_eeprom will output complete status for the MCU EEPROM.
 
-###Step 2 Read memory
+2. ###Write static data to SPI EEPROM
+  Run write\_static\flight\_test.  This will write to MCU and SPI EEPROM a static test flight data. Run write\_static\flight\_test will run until is full.
 
-Run read\_cleared\_memory.  This will confirm the addresses of the MCU EEPROM has been cleared.
+3. ###Read flight data
+  Run read\_flight\_data  This will output the flight data over serial in a CSV format.  Save output to as a csv file.
 
-###Step 3 Test Write to memory
-Run write\_flight\_test.  This will write to MCU and SPI EEPROM a static test flight data.
+4. ###Clear and validate MCU EEPROM
+  Run clear\_and\_validate\_mcu\_eeprom.  This will clear and validate the MCU EEPROM. clear\_and\_validate\_mcu\_eeprom will output complete status for the MCU EEPROM.
 
-###Step 4 Read test flight data
+5. ###Test Sensors
+  Run write\_sensor\_test\.  This will save sensor data with out waiting for a real flight.
 
-Run read\_flight\_data  This will output the flight data over serial in a CSV format.  Save output to as a csv file.  then open with excel
-
-###Step 5 Clear memory
-Repeat step 1.
-
-###Step 6 Test Sensors
-Run write\_sensor\_data.  This will save sensor data with out waiting for a real flight.
-
-###Step 7 Read test sensor data
-
-Run read\_flight\_data  This will output the flight data over serial in a CSV format.  Save output to as a csv file.  then open with excel
+6. ###Read flight data
+  Run read\_flight\_data  This will output the flight data over serial in a CSV format.  Save output to as a csv file.  then open with excel
 
 #Pre-Flight:
-###Step 1 Clear memory
-Run clear\_memory.  This will clear the addresses from MCU EEPROM. clear\_memory will output complete status for the MCU EEPROM.
-
-###Step 2 Read memory
-Run read\_cleared\_memory.  This will confirm the addresses of the MCU EEPROM has been cleared.
+1. ###Clear and validate MCU EEPROM
+  Run clear\_and\_validate\_mcu\_eeprom.  This will clear and validate the MCU EEPROM. clear\_and\_validate\_mcu\_eeprom will output complete status for the MCU EEPROM.
 
 #Flight:
-###Step 1
-Run write\_flight\_data
-###Step 2
-Launch
+1. ###Load flight program
+  Run write\_flight\_data
+2. ###Launch
 
 #Post-Flight
-###Step 1 
-Run read\_flight\_data  This will output the flight data over serial in a CSV format.  Save output to as a csv file.  then open with excel
+1. ###Read flight data
+  Run read\_flight\_data  This will output the flight data over serial in a CSV format.  Save output to as a csv file.
