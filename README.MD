@@ -30,7 +30,6 @@ Most of code is based on examples from Arduino and RadioBro.
   Run clear\_and\_validate\_mcu\_eeprom.  This will clear and validate the MCU EEPROM. clear\_and\_validate\_mcu\_eeprom will output complete status for the MCU EEPROM.
 
 #Flight:
-
 1. ###Load flight program
   Run write\_flight\_data
 2. ###Launch
