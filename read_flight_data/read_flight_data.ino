@@ -216,10 +216,9 @@ void print_data(int last_address,boolean print_calculated){
             Serial.print(",");
         }//end temperature
 
-        //pressure
+        //time
         if(print_calculated){
-            Serial.print((array_data_12 << 24) + (array_data_13 << 16) + (array_data_14 << 8) + array_data_15, DEC);
-            Serial.print(",");
+            Serial.println((array_data_12 << 24) + (array_data_13 << 16) + (array_data_14 << 8) + array_data_15, DEC);
         }
         else{
             Serial.print(array_data_12, DEC);
@@ -228,9 +227,8 @@ void print_data(int last_address,boolean print_calculated){
             Serial.print(",");
             Serial.print(array_data_14, DEC);
             Serial.print(",");
-            Serial.print(array_data_15, DEC);
-            Serial.print(",");
-        }//end pressure
+            Serial.println(array_data_15, DEC);
+        }//end time
 
       }// end for
 }//end print_data
