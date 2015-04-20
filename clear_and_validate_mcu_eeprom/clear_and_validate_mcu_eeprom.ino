@@ -18,6 +18,7 @@ void clear_eeprom(){
     }
     EEPROM.write(i, 255);
   }
+  Serial.println("");
   Serial.println("MCU EEPROM cleared");
 
 }
@@ -46,7 +47,7 @@ void setup() {
   Serial.println();
   Serial.println();
   validate_eeprom();
-
+  Serial.print("");
   Serial.print("Complete");
   // turn the LED on when we're done
   digitalWrite(7, HIGH);

@@ -175,12 +175,13 @@ The program checks the third byte for a value 0.
   //  EEPROM.write(addr >> 8, 0);
   //  EEPROM.write(addr, 1);
    EEPROM.write(0,addr >> 8);
-   EEPROM.write(1, 1);
+   EEPROM.write(1, addr);
 /*
 *******bug correction above********
 The program checks the first two bytes for addr.
 */
    //delay(6000); //Delay 6 seconds (0.167 Hz * 10800 sec (3 hr) flight = 1800 packets saved < 2048 (# pakcets able to be saved)
+   delay(1000);
  }
  //blink LEDs when memory is full
  while (flight == 2) {

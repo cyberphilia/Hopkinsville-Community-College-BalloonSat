@@ -15,7 +15,7 @@ Based on BalloonSat Experiment Sensor Board Flight Code with some bug fixes
  PREFLIGHT: To access all memory locations, the onboard EEPROM must be overwritten to 0xFF (255) in all addresses before launch.
  Accomplish this with the EEPROM_CLEAR program.
  POSTFLIGHT: To recover saved data, use the RECOVERY program. Each byte will be printed on a seprate line.
- 
+
  This was tested in Arduino 1.0.6 on March 17th, 2015 using BalloonSat Experiment Board Version P52520. Files MEMORY.CPP, MEMORY.h, MS5611.CPP, MS5611.h must be included in the same directory as this file to work.
  This code is open source and able to modified and redistributed freely.
  */
@@ -45,9 +45,9 @@ void setup()
   SPI.begin(); //start SPI functionality
   aa256.initE(10); //intialize 25AA256 on slave select pin 10
   ms5611.init(9); //initialize ms5611 (get calibration coefficients) on slave select pin 9
-  
+
   //Serial.println("Initialized"); //uncomment to recieve serial confirmation of intialization
-  
+
   //blink green LED after intialization
   digitalWrite(7, HIGH);
   delay(500);
@@ -75,7 +75,7 @@ void loop()
   byte flight = 0 ; //start in flight state 0
 
   //check to see if memory is full, if it is, just blink LEDs
-  if (EEPROM.read(2) == 0) {//address 512
+  if (EEPROM.read(2) == 0) {
     flight = 2;
   }
 
@@ -85,7 +85,7 @@ void loop()
     addr = ahigh * 256 + alow;
     flight=1;
   }
-  
+
   //FLIGHT STATE 0- WAITING FOR LAUNCH
   while (flight == 0) {
 
@@ -99,7 +99,7 @@ void loop()
       digitalWrite(5, LOW);
       flight = 1; //if ascent has occured, start saving data
     }
-    
+
     /*
     //TIME DELAY- remove block comment to use
     //set a certain time after launch to begin saving data. Can be used alone or with pressure launch detect
@@ -195,7 +195,7 @@ void loop()
       //  EEPROM.write(addr >> 8, 0);
       //  EEPROM.write(addr, 1);
        EEPROM.write(0,addr >> 8);
-       EEPROM.write(1, 1);
+       EEPROM.write(1, addr);
      /*
     *******bug correction above********
     The program checks the first two bytes for addr.

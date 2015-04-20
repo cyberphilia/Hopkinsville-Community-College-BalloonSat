@@ -10,7 +10,7 @@ Based on the SPI example
 #include "SPI.h"
 #include <EEPROM.h>
 #define DATAOUT 11//MOSI
-#define DATAIN  12//MISO 
+#define DATAIN  12//MISO
 #define SPICLOCK  13//sck
 #define SLAVESELECT 10//ss
 
@@ -59,7 +59,7 @@ byte read_spi_eeprom(int EEPROM_address)
   data = SPI.transfer(0xFF); //get data byte
   digitalWrite(SLAVESELECT,HIGH); //release chip, signal end transfer
   return data;
-} 
+}
 void print_header(boolean print_calculated){
   Serial.print("address");
   if(!print_calculated)
@@ -74,12 +74,12 @@ void print_header(boolean print_calculated){
   if(!print_calculated){
     Serial.print(",pressure >> 24");
     Serial.print(",pressure >> 16");
-    Serial.print(",pressure >> 8");  
+    Serial.print(",pressure >> 8");
   }
   Serial.print(",pressure");
   if(!print_calculated)
-    Serial.print(",temperature >> 8");
-  Serial.print(",temperature");
+    Serial.print(",dtemp >> 8");
+  Serial.print(",dtemp");
   if(!print_calculated){
     Serial.print(",time >> 24");
     Serial.print(",time >> 16");
@@ -96,10 +96,10 @@ int get_last_written_address(){
   if(full_check == 0)
     return 32768;
   //Check to see if SPI EEPROM is marked as cleared
-  if (address0 == 255 && address1 == 255) 
+  if (address0 == 255 && address1 == 255)
       return 0;
 
-  return address0 << 8 + address1;
+  return (address0 << 8) + address1;
 
 }
 void print_data(int last_address,boolean print_calculated){
@@ -154,7 +154,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //temp
         if(print_calculated){
-            Serial.print(array_data_0 << 8 + array_data_1, DEC);
+            Serial.print((array_data_0 << 8) + array_data_1, DEC);
             Serial.print(",");
         }
         else{
@@ -166,7 +166,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //IR
         if(print_calculated){
-            Serial.print(array_data_2 << 8 + array_data_3, DEC);
+            Serial.print((array_data_2 << 8) + array_data_3, DEC);
             Serial.print(",");
         }
         else{
@@ -178,7 +178,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //Humid
         if(print_calculated){
-            Serial.print(array_data_4 << 8 + array_data_5, DEC);
+            Serial.print((array_data_4 << 8) + array_data_5, DEC);
             Serial.print(",");
         }
         else{
@@ -190,7 +190,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //pressure
         if(print_calculated){
-            Serial.print(array_data_6 << 24 + array_data_7 << 16 + array_data_8 << 8 + array_data_9, DEC);
+            Serial.print((array_data_6 << 24) + (array_data_7 << 16) + (array_data_8 << 8) + array_data_9, DEC);
             Serial.print(",");
         }
         else{
@@ -206,7 +206,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //temperature
         if(print_calculated){
-            Serial.print(array_data_10 << 8 + array_data_11, DEC);
+            Serial.print((array_data_10 << 8) + array_data_11, DEC);
             Serial.print(",");
         }
         else{
@@ -218,7 +218,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //pressure
         if(print_calculated){
-            Serial.print(array_data_12 << 24 + array_data_13 << 16 + array_data_14 << 8 + array_data_15, DEC);
+            Serial.print((array_data_12 << 24) + (array_data_13 << 16) + (array_data_14 << 8) + array_data_15, DEC);
             Serial.print(",");
         }
         else{
@@ -248,12 +248,12 @@ void setup() {
   SPCR = SPCR = (1<<SPE)|(1<<MSTR);
   clr=SPSR;
   clr=SPDR;
-  delay(10);  
+  delay(10);
   Serial.println();
   Serial.println();
   delay(1000);
 
-  
+
   boolean print_calculated = false;
   int last_address = get_last_written_address();
 
@@ -261,7 +261,7 @@ void setup() {
   print_header(print_calculated);
   print_data(last_address,print_calculated);
 
-   
+
 }
 
 void loop() {
