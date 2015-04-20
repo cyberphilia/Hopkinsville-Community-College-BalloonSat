@@ -47,7 +47,10 @@ char spi_transfer(volatile char data)
   return SPDR;                    // return the received byte
 }
 
-
+unsigned long bit_shift_left(byte b , int shift)
+{
+   return ((unsigned long)b << shift);
+}
 byte read_spi_eeprom(int EEPROM_address)
 {
   //READ EEPROM
@@ -99,7 +102,7 @@ int get_last_written_address(){
   if (address0 == 255 && address1 == 255)
       return 0;
 
-  return (address0 << 8) + address1;
+  return bit_shift_left(address0 , 8) + address1;
 
 }
 void print_data(int last_address,boolean print_calculated){
@@ -154,7 +157,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //temp
         if(print_calculated){
-            Serial.print((array_data_0 << 8) + array_data_1, DEC);
+            Serial.print(bit_shift_left(array_data_0 << 8) + array_data_1, DEC);
             Serial.print(",");
         }
         else{
@@ -166,7 +169,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //IR
         if(print_calculated){
-            Serial.print((array_data_2 << 8) + array_data_3, DEC);
+            Serial.print(bit_shift_left(array_data_2 , 8) + array_data_3, DEC);
             Serial.print(",");
         }
         else{
@@ -178,7 +181,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //Humid
         if(print_calculated){
-            Serial.print((array_data_4 << 8) + array_data_5, DEC);
+            Serial.print(bit_shift_left(array_data_4 , 8) + array_data_5, DEC);
             Serial.print(",");
         }
         else{
@@ -190,7 +193,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //pressure
         if(print_calculated){
-            Serial.print((array_data_6 << 24) + (array_data_7 << 16) + (array_data_8 << 8) + array_data_9, DEC);
+            Serial.print(bit_shift_left(array_data_6 , 24) + bit_shift_left(array_data_7 , 16) + bit_shift_left(array_data_8 , 8) + array_data_9, DEC);
             Serial.print(",");
         }
         else{
@@ -206,7 +209,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //temperature
         if(print_calculated){
-            Serial.print((array_data_10 << 8) + array_data_11, DEC);
+            Serial.print(bit_shift_left(array_data_10 , 8) + array_data_11, DEC);
             Serial.print(",");
         }
         else{
@@ -218,7 +221,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //time
         if(print_calculated){
-            Serial.println((array_data_12 << 24) + (array_data_13 << 16) + (array_data_14 << 8) + array_data_15, DEC);
+            Serial.println(bit_shift_left(array_data_12 , 24) + (array_data_13 , 16) + (array_data_14 , 8) + array_data_15, DEC);
         }
         else{
             Serial.print(array_data_12, DEC);
