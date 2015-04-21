@@ -221,7 +221,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //time
         if(print_calculated){
-            Serial.println(bit_shift_left(array_data_12 , 24) + (array_data_13 , 16) + (array_data_14 , 8) + array_data_15, DEC);
+            Serial.println(bit_shift_left(array_data_12 , 24) + bit_shift_left(array_data_13 , 16) + bit_shift_left(array_data_14 , 8) + array_data_15, DEC);
         }
         else{
             Serial.print(array_data_12, DEC);
@@ -255,7 +255,7 @@ void setup() {
   delay(1000);
 
 
-  boolean print_calculated = false;
+  boolean print_calculated = true;
   int last_address = get_last_written_address();
 
 
