@@ -157,7 +157,7 @@ void print_data(int last_address,boolean print_calculated){
 
         //temp
         if(print_calculated){
-            Serial.print(bit_shift_left(array_data_0 << 8) + array_data_1, DEC);
+            Serial.print(bit_shift_left(array_data_0,8) + array_data_1, DEC);
             Serial.print(",");
         }
         else{
