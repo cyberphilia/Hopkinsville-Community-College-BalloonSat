@@ -1,4 +1,4 @@
-This code was written to be used with the RadioBro BalloonSat Experiment Sensor Board
+This code was written to be used with the RadioBro BalloonSat Experiment Sensor Board.
 
 Most of code is based on examples from Arduino and RadioBro.
 
