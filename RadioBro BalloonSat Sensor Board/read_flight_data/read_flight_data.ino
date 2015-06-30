@@ -94,10 +94,16 @@ int get_last_written_address(){
   byte address0 = EEPROM.read(0);
   byte address1 = EEPROM.read(1);
   byte full_check = EEPROM.read(2);
+  Serial.println("address0");
+  Serial.println(address0);
+  Serial.println("address1");
+  Serial.println(address1);
+  Serial.println("full_check");
+  Serial.println(full_check);
 
   //Check to see if SPI EEPROM has been marked as full
-  if(full_check == 0)
-    return 32768;
+//  if(full_check == 0)
+  return 32768;
   //Check to see if SPI EEPROM is marked as cleared
   if (address0 == 255 && address1 == 255)
       return 0;
@@ -107,14 +113,14 @@ int get_last_written_address(){
 }
 void print_data(int last_address,boolean print_calculated){
 
-  if(last_address <= 0){
-    Serial.println("Invalid Address: the last address can not be zero or less");
-    return;
-  }
-  if(last_address >32768){
-    Serial.println("Invalid Address: the last address can not be greater than 32768");
-    return;
-  }
+//  if(last_address <= 0){
+//    Serial.println("Invalid Address: the last address can not be zero or less");
+//    return;
+//  }
+//  if(last_address >32768){
+//    Serial.println("Invalid Address: the last address can not be greater than 32768");
+//    return;
+//  }
 
   byte array_data_0;
   byte array_data_1;
@@ -133,7 +139,7 @@ void print_data(int last_address,boolean print_calculated){
   byte array_data_14;
   byte array_data_15;
 
-    for (int i = 0; i < last_address; i+=16) {
+    for (int i = 0; i < 32768 && i>=0; i+=16) {
       array_data_0 =   read_spi_eeprom(i);
       array_data_1 =   read_spi_eeprom(i+1);
       array_data_2 =   read_spi_eeprom(i+2);
@@ -256,7 +262,10 @@ void setup() {
 
 
   boolean print_calculated = true;
-  int last_address = get_last_written_address();
+  unsigned int last_address = get_last_written_address();
+  
+
+
 
 
   print_header(print_calculated);
