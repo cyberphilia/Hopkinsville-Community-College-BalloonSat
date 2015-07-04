@@ -22,7 +22,7 @@ MEMORY aa256; //set instance of class MEMORY
 //Settings Start----------------------------------------------------------------
 //------------------------------------------------------------------------------
 unsigned int max_spi_eerom_memory = 32768;
-int reading_frequency = 1;//in miliseconds
+int reading_frequency = 5000;//in miliseconds.  1000 miliseconds equals 1 second
 int array_size = 16;
 // Delays
 // +++++++
@@ -140,12 +140,21 @@ void setup() {
 
   Serial.print("Maxium Memory:\t");
   Serial.println(max_spi_eerom_memory);
+  
   Serial.print("Reading Frequency:\t");
   Serial.println(reading_frequency);
+  
   Serial.print("Array Size:\t");
   Serial.println(array_size);
+
   Serial.print("Starting Address:\t");
   Serial.println(get_last_written_address());
+
+  Serial.print("Number of saves with current array size:\t");
+  Serial.println(max_spi_eerom_memory/array_size);
+
+  Serial.print("Number of seconds with until full:\t");
+  Serial.println(((max_spi_eerom_memory/array_size)*reading_frequency)/1000);
 
 
 }
