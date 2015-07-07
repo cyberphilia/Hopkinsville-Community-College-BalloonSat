@@ -35,7 +35,7 @@ int pressure_delay = 300;
 
 //Variables
 unsigned int last_address = 0;
-int data[array_size]; //array to hold sensor data
+int data[16]; //array to hold sensor data
 int temppin = A2; //lmt87 on ADC2
 int IRpin = A4; //TSL262R on ADC4
 int Humidpin = A3; //HIH-5030 on ADC3
@@ -82,29 +82,6 @@ int get_humidity()//record IR in mV
     return humidity;
 }
 
-int data[] fill_arry(int humidity, int infrared, int temperature_mvs,
-  long temperature, long pressure, unsigned long timpstamp)
-{
-  int data[16] ;
-  data[0] = temperature_mvs >> 8;
-  data[1] = temperature_mvs;
-  data[2] = infrared >> 8;
-  data[3] = infrared;
-  data[4] = humidity >> 8;
-  data[5] = humidity;
-  data[6] = pressure >> 24;
-  data[7] = pressure >> 16;
-  data[8] = pressure >> 8;
-  data[9] = pressure;
-  data[10] = temperature >> 8;
-  data[11] = temperature;
-  data[12] = timpstamp >> 24;
-  data[13] = timpstamp >> 16;
-  data[14] = timpstamp >> 8;
-  data[15] = timpstamp;
-  return data;
-
-}
 
 
 unsigned get_last_written_address()
@@ -177,8 +154,23 @@ void loop() {
       Serial.println(last_address);
       write_last_written_address(last_address+array_size);     
 
-      int data_array[array_size] = fill_arry(humidity,infrared, temperature_mvs, temperature, pressure, 
-        timestamp); 
+        int data[16] ;
+        data[0] = temperature_mvs >> 8;
+        data[1] = temperature_mvs;
+        data[2] = infrared >> 8;
+        data[3] = infrared;
+        data[4] = humidity >> 8;
+        data[5] = humidity;
+        data[6] = pressure >> 24;
+        data[7] = pressure >> 16;
+        data[8] = pressure >> 8;
+        data[9] = pressure;
+        data[10] = temperature >> 8;
+        data[11] = temperature;
+        data[12] = timpstamp >> 24;
+        data[13] = timpstamp >> 16;
+        data[14] = timpstamp >> 8;
+        data[15] = timpstamp; 
   }
   else
   {
