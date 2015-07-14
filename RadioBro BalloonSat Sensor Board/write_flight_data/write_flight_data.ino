@@ -42,6 +42,10 @@ int Humidpin = A3; //HIH-5030 on ADC3
 long pressure_base; 
 unsigned long boot_timestamp = millis();
 unsigned long timestamp;
+// flight status:
+// 0 - preflight
+// 1 - in flight
+// 2 - memory full
 byte flight = 0 ; //start in flight state 0
 
 
