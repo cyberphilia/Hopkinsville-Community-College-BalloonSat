@@ -150,7 +150,7 @@ void loop() {
   long pressure = get_pressure();
   unsigned long timpstamp = millis();
 
- 
+// Pre flight 
 if(flight_status = 0)
 {
   //time check
@@ -159,43 +159,64 @@ if(flight_status = 0)
   {
     flight_status = 1
   } 
-
 }
 
-
+// In flight
 if(flight_status = 1)
 {
-
   if(last_address < max_address && last_address >= 0)
     {
       Serial.print("Address: "); 
-      Serial.println(last_address);
-      write_last_written_address(last_address+array_size);     
+      Serial.println(last_address);          
 
-        int data[16] ;
-        data[0] = temperature_mvs >> 8;
-        data[1] = temperature_mvs;
-        data[2] = infrared >> 8;
-        data[3] = infrared;
-        data[4] = humidity >> 8;
-        data[5] = humidity;
-        data[6] = pressure >> 24;
-        data[7] = pressure >> 16;
-        data[8] = pressure >> 8;
-        data[9] = pressure;
-        data[10] = temperature >> 8;
-        data[11] = temperature;
-        data[12] = timpstamp >> 24;
-        data[13] = timpstamp >> 16;
-        data[14] = timpstamp >> 8;
-        data[15] = timpstamp; 
+      int data[16] ;
+      data[0] = temperature_mvs >> 8;
+      data[1] = temperature_mvs;
+      data[2] = infrared >> 8;
+      data[3] = infrared;
+      data[4] = humidity >> 8;
+      data[5] = humidity;
+      data[6] = pressure >> 24;
+      data[7] = pressure >> 16;
+      data[8] = pressure >> 8;
+      data[9] = pressure;
+      data[10] = temperature >> 8;
+      data[11] = temperature;
+      data[12] = timpstamp >> 24;
+      data[13] = timpstamp >> 16;
+      data[14] = timpstamp >> 8;
+      data[15] = timpstamp; 
+
+      //write to EEPROM
+      // aa256.writeEnable(); //allows data to be written
+      // aa256.writeData(data, last_address+array_size); //writes the "data" array to the external memory
+
+      // write_last_written_address(last_address+array_size); 
   }
   else
   {
-      Serial.println("Memory Full");        
+      Serial.println("Memory Full");  
+      flight_status = 2;
   }
 }
 
-  delay(reading_frequency);
+// Memory Full 
+// blink LEDs
+while (flight == 2) 
+{
+    digitalWrite(5, HIGH);
+    digitalWrite(6, HIGH);
+    digitalWrite(7, HIGH);
+    delay(1000);
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW);
+    digitalWrite(7, LOW);
+    delay(5000);
+}
+
+
+
+
+delay(reading_frequency);
 
 }
