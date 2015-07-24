@@ -46,7 +46,7 @@ unsigned long timestamp;
 // 0 - preflight
 // 1 - in flight
 // 2 - memory full
-byte flight = 0 ; //start in flight state 0
+byte flight_status = 0 ; //start in flight state 0
 
 
 long get_pressure()
@@ -149,9 +149,23 @@ void loop() {
   long temperature = get_temperature();
   long pressure = get_pressure();
   unsigned long timpstamp = millis();
-  //flight check
+
+ 
+if(flight_status = 0)
+{
   //time check
-  //pressure check    
+  //pressure check
+  if(time_delay < timpstamp && pressure > pressure_base + pressure_delay)
+  {
+    flight_status = 1
+  } 
+
+}
+
+
+if(flight_status = 1)
+{
+
   if(last_address < max_address && last_address >= 0)
     {
       Serial.print("Address: "); 
@@ -178,8 +192,9 @@ void loop() {
   }
   else
   {
-      Serial.println("Done");        
+      Serial.println("Memory Full");        
   }
+}
 
   delay(reading_frequency);
 
