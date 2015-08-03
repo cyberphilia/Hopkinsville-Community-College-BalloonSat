@@ -187,10 +187,12 @@ if(flight_status = 1)
       data[14] = timpstamp >> 8;
       data[15] = timpstamp; 
 
+
+      // Write data to SPI EEPROM
       aa256.writeEnable(); //allows data to be written
       next_address = aa256.writeData(data, next_address+array_size); //writes the "data" array to the external memory
 
-
+      // Write next addess to MCU EEPROM
       write_next_address(next_address); 
   }
   else
