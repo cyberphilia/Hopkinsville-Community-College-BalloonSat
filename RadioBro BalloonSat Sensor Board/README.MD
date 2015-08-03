@@ -1,6 +1,6 @@
 ###Prerequisite:
 - [Arduino Software](http://arduino.cc/en/Main/Software)
-- [BalloonSat Experiment Sensor Board](http://shop.radiobro.com/BalloonSat-Experiment-Sensor-Board-BSExpBrd.htm)
+- [Radiobro BalloonSat Experiment Sensor Board](http://shop.radiobro.com/BalloonSat-Experiment-Sensor-Board-BSExpBrd.htm)
 
 
 
@@ -32,7 +32,13 @@ int pressure_delay = 300;
 //------------------------------------------------------------------------------
 ```
 
-###Read flight data
+#Flight
+###Load flight program
+Run write\_flight\_data
+###Launch!
+
+
+#Read flight data
 Run read\_flight\_data  This will output the flight data over serial in a CSV format.  Save output to as a csv file.  then open with excel
 
 Modify the variable print_calculated to change the output.
