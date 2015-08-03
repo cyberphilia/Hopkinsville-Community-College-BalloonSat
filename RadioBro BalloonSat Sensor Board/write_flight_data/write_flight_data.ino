@@ -34,7 +34,7 @@ int pressure_delay = 300;
 //------------------------------------------------------------------------------
 
 //Variables
-unsigned int last_address = 0;
+unsigned int next_address = 0;
 int data[16]; //array to hold sensor data
 int temppin = A2; //lmt87 on ADC2
 int IRpin = A4; //TSL262R on ADC4
@@ -88,7 +88,7 @@ int get_humidity()//record IR in mV
 
 
 
-unsigned get_last_written_address()
+unsigned get_next_address()
 {
     unsigned int address = 0;
     byte ahigh = EEPROM.read(0);
@@ -104,7 +104,7 @@ unsigned get_last_written_address()
     }
 }
 
-void write_last_written_address(int address)
+void write_next_address(unsigned int address)
 {
     EEPROM.write(0, address >> 8);
     EEPROM.write(1, address);
@@ -134,14 +134,14 @@ void setup() {
   Serial.print("Number of saves with current array size:\t");
   Serial.println(max_spi_eerom_memory/array_size);
 
-  Serial.print("Number of seconds with until full:\t");
+  Serial.print("Number of seconds until full:\t");
   Serial.println(((max_spi_eerom_memory/array_size)*reading_frequency)/1000);
 
 
 }
 void loop() {
 
-  last_address = get_last_written_address();
+  next_address = get_next_address();
   unsigned int max_address = max_spi_eerom_memory - array_size;
   int humidity = get_humidity();
   int infrared = get_infrared();
@@ -164,10 +164,10 @@ if(flight_status = 0)
 // In flight
 if(flight_status = 1)
 {
-  if(last_address < max_address && last_address >= 0)
+  if(next_address < max_address && next_address >= 0)
     {
       Serial.print("Address: "); 
-      Serial.println(last_address);          
+      Serial.println(next_address);          
 
       int data[16] ;
       data[0] = temperature_mvs >> 8;
@@ -187,11 +187,11 @@ if(flight_status = 1)
       data[14] = timpstamp >> 8;
       data[15] = timpstamp; 
 
-      //write to EEPROM
-      // aa256.writeEnable(); //allows data to be written
-      // aa256.writeData(data, last_address+array_size); //writes the "data" array to the external memory
+      aa256.writeEnable(); //allows data to be written
+      next_address = aa256.writeData(data, next_address+array_size); //writes the "data" array to the external memory
 
-      // write_last_written_address(last_address+array_size); 
+
+      write_next_address(next_address); 
   }
   else
   {
