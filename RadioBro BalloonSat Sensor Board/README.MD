@@ -1,8 +1,11 @@
-###Prerequisite:
+#Prerequisite:
 - [Arduino Software](http://arduino.cc/en/Main/Software)
 - [Radiobro BalloonSat Experiment Sensor Board](http://shop.radiobro.com/BalloonSat-Experiment-Sensor-Board-BSExpBrd.htm)
 
-
+#Arduino Software Settings
+- Board: Arduino Mega or Mega 2560
+- Processor: ATMega2560 (Mega 2560)
+- Serial: select the port your board is plugged in to.
 
 #Pre-Flight:
 
