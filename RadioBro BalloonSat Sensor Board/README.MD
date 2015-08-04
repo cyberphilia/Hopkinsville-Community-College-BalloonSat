@@ -8,7 +8,7 @@
 
 ###Clear and validate MCU EEPROM
   
-Run clear\_and\_validate\_mcu\_eeprom.  This will clear and validate the MCU EEPROM. clear\_and\_validate\_mcu\_eeprom will output complete status for the MCU EEPROM.
+Upload clear\_and\_validate\_mcu\_eeprom.  This will clear and validate the MCU EEPROM. clear\_and\_validate\_mcu\_eeprom will output complete status for the MCU EEPROM.
 
 
 ###Configure write\_flight\_data.  
@@ -34,12 +34,12 @@ int pressure_delay = 300;
 
 #Flight
 ###Load flight program
-Run write\_flight\_data
+Upload write\_flight\_data
 ###Launch!
 
 
 #Read flight data
-Run read\_flight\_data  This will output the flight data over serial in a CSV format.  Save output to as a csv file.  then open with excel
+Upload read\_flight\_data  This will output the flight data over serial in a CSV format.  Save output to as a csv file.  then open with excel
 
 Modify the variable print_calculated to change the output.
 

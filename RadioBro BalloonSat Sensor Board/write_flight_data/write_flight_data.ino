@@ -129,7 +129,7 @@ void setup() {
   Serial.println(array_size);
 
   Serial.print("Starting Address:\t");
-  Serial.println(get_last_written_address());
+  Serial.println(get_next_address());
 
   Serial.print("Number of saves with current array size:\t");
   Serial.println(max_spi_eerom_memory/array_size);
@@ -157,7 +157,7 @@ if(flight_status = 0)
   //pressure check
   if(time_delay < timpstamp && pressure > pressure_base + pressure_delay)
   {
-    flight_status = 1
+    flight_status = 1;
   } 
 }
 
@@ -204,7 +204,7 @@ if(flight_status = 1)
 
 // Memory Full 
 // blink LEDs
-while (flight == 2) 
+while (flight_status == 2) 
 {
     digitalWrite(5, HIGH);
     digitalWrite(6, HIGH);
