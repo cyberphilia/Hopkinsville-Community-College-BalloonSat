@@ -22,13 +22,13 @@ MEMORY aa256; //set instance of class MEMORY
 //Settings Start----------------------------------------------------------------
 //------------------------------------------------------------------------------
 unsigned int max_spi_eerom_memory = 32768;
-int reading_frequency = 100;//5000;//in miliseconds.  1000 miliseconds equals 1 second
+int reading_frequency = 5000;//in miliseconds.  1000 miliseconds equals 1 second
 int array_size = 16;
 // Delays
 // +++++++
 // You can use time or pressure delay or both
 int time_delay = 0; //in mileseconds
-int pressure_delay = 300;
+int pressure_delay = 0;
 //------------------------------------------------------------------------------
 //Settings End------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -107,14 +107,14 @@ void write_next_address(unsigned int address)
 }
 
 void setup() {
-  Serial.begin(9600); 
 
+ 
   Serial.begin(9600); // start serial with baud rate 9600
   SPI.begin(); //start SPI functionality
   aa256.initE(10); //intialize 25AA256 on slave select pin 10
   ms5611.init(9); //initialize ms5611 (get calibration coefficients) on slave select pin 9
 
-
+  pressure_base = get_pressure();
   Serial.print("Maxium Memory:\t");
   Serial.println(max_spi_eerom_memory);
   
@@ -147,18 +147,19 @@ void loop() {
   unsigned long timpstamp = millis();
 
 // Pre flight 
-if(flight_status = 0)
+if(flight_status == 0)
 {
   //time check
   //pressure check
-  if(time_delay < timpstamp && pressure > pressure_base + pressure_delay)
+
+  if(time_delay < timpstamp && pressure >= pressure_base + pressure_delay)
   {
     flight_status = 1;
   } 
 }
 
 // In flight
-if(flight_status = 1)
+if(flight_status == 1)
 {
   if(next_address < max_address && next_address >= 0)
     {
@@ -184,10 +185,27 @@ if(flight_status = 1)
       data[15] = timpstamp; 
 
 
+ 
+    //OUTPUT DATA TO SERIAL
+    //outputs the sensor readings to the serial port. Take out block comment to use.
+    Serial.print("Pressure: ");
+    Serial.println(pressure);
+    Serial.print("temperature: ");
+    Serial.println(temperature);
+    Serial.print("timpstamp: ");
+    Serial.println(timpstamp);
+    Serial.print("temperature_mvs: ");
+    Serial.println(temperature_mvs);
+    Serial.print("infrared: ");
+    Serial.println(infrared);
+    Serial.print("humidity: ");
+    Serial.println(humidity);
+ 
+
+
+
       // Write data to SPI EEPROM
       aa256.writeEnable(); //allows data to be written
-      Serial.print("Address2: "); 
-      Serial.println(next_address);
       next_address = aa256.writeData(data, next_address); //writes the "data" array to the external memory
 
       // Write next addess to MCU EEPROM
@@ -220,4 +238,5 @@ while (flight_status == 2)
 delay(reading_frequency);
 
 }
+
 
