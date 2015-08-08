@@ -51,7 +51,7 @@ unsigned long bit_shift_left(byte b , int shift)
 {
    return ((unsigned long)b << shift);
 }
-byte read_spi_eeprom(int EEPROM_address)
+byte read_spi_eeprom(unsigned int EEPROM_address)
 {
   //READ EEPROM
   float data;
@@ -90,28 +90,25 @@ void print_header(boolean print_calculated){
   }
   Serial.println(",time");
 }
-int get_last_written_address(){
+unsigned int get_last_written_address(){
   byte address0 = EEPROM.read(0);
   byte address1 = EEPROM.read(1);
   byte full_check = EEPROM.read(2);
-  Serial.println("address0");
-  Serial.println(address0);
-  Serial.println("address1");
-  Serial.println(address1);
-  Serial.println("full_check");
-  Serial.println(full_check);
 
   //Check to see if SPI EEPROM has been marked as full
-//  if(full_check == 0)
+if(full_check == 0)
+{
   return 32768;
+}
   //Check to see if SPI EEPROM is marked as cleared
   if (address0 == 255 && address1 == 255)
+  {
       return 0;
-
+  }
   return bit_shift_left(address0 , 8) + address1;
 
 }
-void print_data(int last_address,boolean print_calculated){
+void print_data(unsigned int last_address,boolean print_calculated){
 
 //  if(last_address <= 0){
 //    Serial.println("Invalid Address: the last address can not be zero or less");
@@ -138,8 +135,7 @@ void print_data(int last_address,boolean print_calculated){
   byte array_data_13;
   byte array_data_14;
   byte array_data_15;
-
-    for (int i = 0; i < 32768 && i>=0; i+=16) {
+    for (unsigned int i = 0; i <= last_address && i>=0; i+=16) {
       array_data_0 =   read_spi_eeprom(i);
       array_data_1 =   read_spi_eeprom(i+1);
       array_data_2 =   read_spi_eeprom(i+2);
@@ -163,25 +159,25 @@ void print_data(int last_address,boolean print_calculated){
 
         //temp
         if(print_calculated){
-            Serial.print(bit_shift_left(array_data_0,8) + array_data_1, DEC);
+            Serial.print(bit_shift_left(array_data_0,8) + array_data_1);
             Serial.print(",");
         }
         else{
-            Serial.print(array_data_0, DEC);
+            Serial.print(array_data_0);
             Serial.print(",");
-            Serial.print(array_data_1, DEC);
+            Serial.print(array_data_1);
             Serial.print(",");
         }//end temp
 
         //IR
         if(print_calculated){
-            Serial.print(bit_shift_left(array_data_2 , 8) + array_data_3, DEC);
+            Serial.print(bit_shift_left(array_data_2 , 8) + array_data_3);
             Serial.print(",");
         }
         else{
-            Serial.print(array_data_2, DEC);
+            Serial.print(array_data_2);
             Serial.print(",");
-            Serial.print(array_data_3, DEC);
+            Serial.print(array_data_3);
             Serial.print(",");
         }//end IR
 
@@ -260,14 +256,12 @@ void setup() {
   Serial.println();
   delay(1000);
 
-
   boolean print_calculated = true;
   unsigned int last_address = get_last_written_address();
+
+  Serial.print("Last Array Address: ");
+  Serial.println(last_address);
   
-
-
-
-
   print_header(print_calculated);
   print_data(last_address,print_calculated);
 

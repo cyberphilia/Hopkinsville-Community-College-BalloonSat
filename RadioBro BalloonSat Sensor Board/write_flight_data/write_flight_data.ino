@@ -110,11 +110,23 @@ void setup() {
 
  
   Serial.begin(9600); // start serial with baud rate 9600
+  
   SPI.begin(); //start SPI functionality
   aa256.initE(10); //intialize 25AA256 on slave select pin 10
   ms5611.init(9); //initialize ms5611 (get calibration coefficients) on slave select pin 9
 
+  //blink green LED after intialization
+  digitalWrite(7, HIGH);
+  delay(500);
+  digitalWrite(7, LOW);
+
   pressure_base = get_pressure();
+
+  //blink blue LED after pressure_base is set
+  digitalWrite(6, HIGH);
+  delay(500);
+  digitalWrite(6, LOW);
+  
   Serial.print("Maxium Memory:\t");
   Serial.println(max_spi_eerom_memory);
   
@@ -130,12 +142,9 @@ void setup() {
   Serial.print("Number of saves with current array size:\t");
   Serial.println(max_spi_eerom_memory/array_size);
 
-  Serial.print("Number of seconds until full:\t");
-  Serial.println(((max_spi_eerom_memory/array_size)*reading_frequency)/1000);
-
-
 }
 void loop() {
+
 
   next_address = get_next_address();
   unsigned int max_address = max_spi_eerom_memory - array_size;
@@ -151,18 +160,29 @@ if(flight_status == 0)
 {
   //time check
   //pressure check
-
-  if(time_delay < timpstamp && pressure >= pressure_base + pressure_delay)
+  
+  if(time_delay < timpstamp && pressure <= pressure_base - pressure_delay)
   {
     flight_status = 1;
-  } 
+  }
+  else
+  {
+    Serial.println("");
+    Serial.println("Pre flight");
+    Serial.print("Time delay: ");
+    Serial.println(time_delay < timpstamp);
+    Serial.print("Pressure delay: ");
+    Serial.println(pressure <= pressure_base - pressure_delay);
+  }
 }
 
 // In flight
 if(flight_status == 1)
 {
+  digitalWrite(5, HIGH);//red
   if(next_address < max_address && next_address >= 0)
     {
+      Serial.println("");    
       Serial.print("Address: "); 
       Serial.println(next_address);          
 
@@ -185,7 +205,7 @@ if(flight_status == 1)
       data[15] = timpstamp; 
 
 
- 
+ /*
     //OUTPUT DATA TO SERIAL
     //outputs the sensor readings to the serial port. Take out block comment to use.
     Serial.print("Pressure: ");
@@ -200,16 +220,17 @@ if(flight_status == 1)
     Serial.println(infrared);
     Serial.print("humidity: ");
     Serial.println(humidity);
- 
+ */
 
 
-
+      digitalWrite(6, HIGH);//blue
       // Write data to SPI EEPROM
       aa256.writeEnable(); //allows data to be written
       next_address = aa256.writeData(data, next_address); //writes the "data" array to the external memory
 
       // Write next addess to MCU EEPROM
       write_next_address(next_address); 
+      digitalWrite(7, HIGH);//green
   }
   else
   {
@@ -222,21 +243,24 @@ if(flight_status == 1)
 // blink LEDs
 while (flight_status == 2) 
 {
-    digitalWrite(5, HIGH);
-    digitalWrite(6, HIGH);
-    digitalWrite(7, HIGH);
+    digitalWrite(5, HIGH);//red
+    digitalWrite(6, HIGH);//blue
+    digitalWrite(7, HIGH);//green
     delay(1000);
-    digitalWrite(5, LOW);
-    digitalWrite(6, LOW);
-    digitalWrite(7, LOW);
+    digitalWrite(5, LOW);//red
+    digitalWrite(6, LOW);//blue
+    digitalWrite(7, LOW);//green
     delay(5000);
 }
 
 
 
-
+    digitalWrite(5, LOW);//red
+    digitalWrite(6, LOW);//blue
+    digitalWrite(7, LOW);//green
 delay(reading_frequency);
 
 }
+
 
 
