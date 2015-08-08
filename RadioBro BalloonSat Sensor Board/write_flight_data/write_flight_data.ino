@@ -22,7 +22,7 @@ MEMORY aa256; //set instance of class MEMORY
 //Settings Start----------------------------------------------------------------
 //------------------------------------------------------------------------------
 unsigned int max_spi_eerom_memory = 32768;
-int reading_frequency = 5000;//in miliseconds.  1000 miliseconds equals 1 second
+int reading_frequency = 100;//5000;//in miliseconds.  1000 miliseconds equals 1 second
 int array_size = 16;
 // Delays
 // +++++++
@@ -88,7 +88,7 @@ int get_humidity()//record IR in mV
 
 
 
-unsigned get_next_address()
+unsigned int get_next_address()
 {
     unsigned int address = 0;
     byte ahigh = EEPROM.read(0);
@@ -96,12 +96,8 @@ unsigned get_next_address()
  
     if (ahigh != 255 || alow != 255) {
         address = ahigh * 256 + alow;
-        return address;
     }
-    else
-    {
-        return 0;
-    }
+    return address;
 }
 
 void write_next_address(unsigned int address)
@@ -190,7 +186,9 @@ if(flight_status = 1)
 
       // Write data to SPI EEPROM
       aa256.writeEnable(); //allows data to be written
-      next_address = aa256.writeData(data, next_address+array_size); //writes the "data" array to the external memory
+      Serial.print("Address2: "); 
+      Serial.println(next_address);
+      next_address = aa256.writeData(data, next_address); //writes the "data" array to the external memory
 
       // Write next addess to MCU EEPROM
       write_next_address(next_address); 
@@ -222,3 +220,4 @@ while (flight_status == 2)
 delay(reading_frequency);
 
 }
+
