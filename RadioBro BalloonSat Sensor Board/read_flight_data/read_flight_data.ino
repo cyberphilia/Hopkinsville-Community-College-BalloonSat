@@ -269,5 +269,16 @@ void setup() {
 }
 
 void loop() {
-
+    digitalWrite(5, HIGH);//red
+    delay(500);
+    digitalWrite(6, HIGH);//blue
+    delay(500);
+    digitalWrite(7, HIGH);//green
+    delay(1000);
+    digitalWrite(5, LOW);//red
+    delay(500);
+    digitalWrite(6, LOW);//blue
+    delay(500);
+    digitalWrite(7, LOW);//green
+    delay(1000);
 }
