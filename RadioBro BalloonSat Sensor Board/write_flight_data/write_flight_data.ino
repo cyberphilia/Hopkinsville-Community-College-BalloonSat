@@ -161,7 +161,7 @@ if(flight_status == 0)
   //time check
   //pressure check
   
-  if(time_delay < timpstamp && pressure <= pressure_base - pressure_delay)
+  if(time_delay < timpstamp && pressure <= (pressure_delay == 0 || pressure_base - pressure_delay))
   {
     flight_status = 1;
   }
