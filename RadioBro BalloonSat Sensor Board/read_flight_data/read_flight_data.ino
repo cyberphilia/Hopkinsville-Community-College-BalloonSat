@@ -256,7 +256,7 @@ void setup() {
   Serial.println();
   delay(1000);
 
-  boolean print_calculated = true;
+  boolean print_calculated = false;
   unsigned int last_address = get_last_written_address();
 
   Serial.print("Last Array Address: ");
